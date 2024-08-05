@@ -1,0 +1,22 @@
+footer {
+    height: 8vh;
+    width: 100%;
+    background-color: #eb1c24;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+  }
+  
+  footer ul {
+    height: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 10px;
+    color: white;
+    font-family: Roboto;
+    font-size: 1.5rem;
+  }
+  
