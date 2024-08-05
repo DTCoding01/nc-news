@@ -1,13 +1,11 @@
 footer {
-    height: 8vh;
-    width: 100%;
-    background-color: #eb1c24;
-    position: fixed;
-    bottom: 0;
-    z-index: 1000;
-  }
-  
-  footer ul {
+  height: 8vh;
+  width: 100%;
+  background-color: #eb1c24;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  ul {
     height: 100%;
     list-style: none;
     display: flex;
@@ -19,4 +17,8 @@ footer {
     font-family: Roboto;
     font-size: 1.5rem;
   }
-  
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
