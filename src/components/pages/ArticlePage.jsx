@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../css/pages/ArticlePage.scss";
 import { useEffect, useState } from "react";
 import { getArticleById, patchArticleVotes } from "../../../api.js";
@@ -19,6 +19,7 @@ export default function ArticlePage() {
   const [articleVotes, setArticleVotes] = useState(0);
   const [userVote, setUserVote] = useState(0);
   const {setError} = useError()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (articleId) {
@@ -33,7 +34,8 @@ export default function ArticlePage() {
           setUserVote(storedVote);
         })
         .catch((error) => {
-          setError("Error fetching article")
+          setError("Article Not Found")
+          navigate("/error")
         });
     }
   }, [articleId]);

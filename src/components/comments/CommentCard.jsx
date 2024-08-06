@@ -2,9 +2,13 @@ import { useContext } from "react";
 import timeAgo from "../../utils/articles";
 import { UserContext } from "../../contexts/UserContext";
 import { deleteComment } from "../../../api";
+import { useNavigate } from "react-router-dom";
+import { useError } from "../../contexts/ErrorContext";
 
 export default function CommentCard({ comment, setComments }) {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate()
+  const {setError} = useError()
 
   function handleClick(e) {
     e.preventDefault();
@@ -14,7 +18,7 @@ export default function CommentCard({ comment, setComments }) {
       )
     );
     deleteComment(comment.comment_id).catch((err) => {
-      console.log("Error deleting comment:", err)
+      setError("Error deleting comment")
       setComments(prevComments => [...prevComments, comment])
     })
   }
