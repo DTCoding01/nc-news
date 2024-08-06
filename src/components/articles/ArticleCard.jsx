@@ -4,7 +4,7 @@ export default function ArticleCard({ article }) {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/article", { state: { articleId: article.article_id } });
+    navigate(`/article/${article.article_id}`);
   }
 
   const altText = `Image for article titled '${article.title}' by ${article.author} on ${article.topic}`;

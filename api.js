@@ -27,3 +27,14 @@ export function patchArticleVotes(id, vote) {
     return article
   });
 }
+
+export function getUserByUsername(username) {
+  return api.get(`/users/${username}`).then(({data: {user}}) =>{
+    return user
+  })
+}
+export function postComment(id, comment) {
+  return api.post(`articles/${id}/comments`, comment).then(({data: {comment}}) => {
+    return comment
+  })
+}
