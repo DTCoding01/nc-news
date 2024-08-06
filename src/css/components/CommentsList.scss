@@ -58,6 +58,7 @@
 
   button {
     width: 25px;
+    height: 18px;
     background-color: #ff474e;
     border: none;
     color: white;
@@ -66,5 +67,11 @@
     background-color: white;
     color: #eb1c24;
     border: 2px solid #eb1c24;
+  }
+
+  .delete-comment {
+    
+    background-color: black;
+    
   }
 }
