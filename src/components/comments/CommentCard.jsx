@@ -7,8 +7,8 @@ import { useError } from "../../contexts/ErrorContext";
 
 export default function CommentCard({ comment, setComments }) {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate()
-  const {setError} = useError()
+  const navigate = useNavigate();
+  const { setError } = useError();
 
   function handleClick(e) {
     e.preventDefault();
@@ -18,9 +18,9 @@ export default function CommentCard({ comment, setComments }) {
       )
     );
     deleteComment(comment.comment_id).catch((err) => {
-      setError("Error deleting comment")
-      setComments(prevComments => [...prevComments, comment])
-    })
+      setError("Error deleting comment");
+      setComments((prevComments) => [...prevComments, comment]);
+    });
   }
 
   return (
@@ -35,11 +35,13 @@ export default function CommentCard({ comment, setComments }) {
         <p className="comment-votes">{comment.votes}</p>
         <button className="upvote">+</button>
         <button className="downvote">-</button>
-        {comment.author === user.username && (
-          <button onClick={handleClick} className="delete-comment">
-            X
-          </button>
-        )}
+        {user
+          ? comment.author === user.username && (
+              <button onClick={handleClick} className="delete-comment">
+                X
+              </button>
+            )
+          : null}
       </div>
     </section>
   );
