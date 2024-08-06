@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getArticles, getTopics } from "../../../api";
 import ArticleCard from "../articles/ArticleCard";
 import "../../css/pages/TopicsArticlesPage.scss";
@@ -10,6 +10,7 @@ export default function TopicsArticlesPage() {
   const [topicDescription, setTopicDescription] = useState("");
   const [topicArticles, setTopicArticles] = useState([]);
   const { setError } = useError();
+  const navigate = useNavigate()
 
   useEffect(() => {
     getTopics()
@@ -25,6 +26,7 @@ export default function TopicsArticlesPage() {
       })
       .catch((error) => {
         setError(error.message);
+        navigate("/error")
       });
 
     getArticles(topicSlug)

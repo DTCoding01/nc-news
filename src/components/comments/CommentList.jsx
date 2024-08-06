@@ -24,6 +24,7 @@ export default function CommentList({ articleId }) {
         })
         .catch((error) => {
           setError("Error fetching comments");
+
         });
     }
   }, [articleId, setError]);

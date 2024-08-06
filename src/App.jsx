@@ -9,6 +9,7 @@ import TopicsPage from "./components/pages/TopicsPage";
 import TopicsArticlesPage from "./components/pages/TopicArticlesPage";
 import { useError } from "./contexts/ErrorContext";
 import ErrorCard from "./components/ErrorCard.jsx";
+import ErrorPage from "./components/pages/ErrorPage.jsx";
 
 function App() {
   const { error, clearError } = useError();
@@ -23,6 +24,8 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route path="/topics" element={<TopicsPage />} />
         <Route path="/topics/:topicSlug" element={<TopicsArticlesPage />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </>
