@@ -4,13 +4,21 @@ const api = axios.create({
   baseURL: "https://be-nc-news-rv48.onrender.com/api",
 });
 
-export function getArticles(topicName = '') {
-  
+export function getArticles({
+  topicName = "",
+  sortBy = "created_at",
+  order = "desc",
+} = {}) {
+  const query = new URLSearchParams();
 
-  const query = topicName ? `?topic=${topicName}` : ""
-  return api.get(`/articles${query}`).then(({ data: { articles } }) => {
-    return articles;
-  });
+  if (topicName) query.append("topic", topicName);
+  if (sortBy) query.append("sort_by", sortBy);
+  if (order) query.append("order", order);
+  return api
+    .get(`/articles?${query.toString()}`)
+    .then(({ data: { articles } }) => {
+      return articles;
+    });
 }
 
 export function getArticleById(articleId) {
