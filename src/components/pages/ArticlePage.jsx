@@ -10,6 +10,7 @@ import {
   saveUserVoteToStorage,
   removeUserVoteFromStorage,
 } from "../../utils/localStorage.js";
+import { useError } from "../../contexts/ErrorContext.jsx";
 
 export default function ArticlePage() {
   const { articleId } = useParams();
@@ -17,6 +18,7 @@ export default function ArticlePage() {
   const [paragraphs, setParagraphs] = useState([]);
   const [articleVotes, setArticleVotes] = useState(0);
   const [userVote, setUserVote] = useState(0);
+  const {setError} = useError()
 
   useEffect(() => {
     if (articleId) {
@@ -31,7 +33,7 @@ export default function ArticlePage() {
           setUserVote(storedVote);
         })
         .catch((error) => {
-          console.error("Error fetching article:", error);
+          setError("Error fetching article")
         });
     }
   }, [articleId]);
