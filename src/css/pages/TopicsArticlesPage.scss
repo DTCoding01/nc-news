@@ -1,0 +1,26 @@
+.topics-articles-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .topic-header {
+        background-color: hsl(358, 84%, 52%);
+        width: 90vw;
+        color: white;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+
+        .topic-slug {
+            font-size: 2rem;
+            width: 100%;
+        }
+        p {
+            align-self: flex-end;
+            width: 100%;
+            
+        }
+    }
+    
+}
+

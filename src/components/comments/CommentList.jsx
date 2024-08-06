@@ -8,11 +8,13 @@ import {
   replaceOptimisticComment,
   removeOptimisticComment,
 } from "../../utils/comments.js";
+import { useError } from "../../contexts/ErrorContext";
 
 export default function CommentList({ articleId }) {
   const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
   const [commentBody, setCommentBody] = useState("");
+  const { setError } = useError();
 
   useEffect(() => {
     if (articleId) {
@@ -21,10 +23,10 @@ export default function CommentList({ articleId }) {
           setComments(comments);
         })
         .catch((error) => {
-          console.error("Error fetching comments:", error);
+          setError("Error fetching comments");
         });
     }
-  }, [articleId]);
+  }, [articleId, setError]);
 
   function handleChange(e) {
     setCommentBody(e.target.value);
@@ -34,35 +36,39 @@ export default function CommentList({ articleId }) {
     e.preventDefault();
 
     if (!user) {
-      console.log("User not logged in");
+      setError("User not logged in");
       return;
     }
 
-    const tempCommentId = Date.now();
-    const newComment = {
-      username: user.username,
-      body: commentBody,
-      comment_id: tempCommentId,
-      created_at: new Date().toISOString(),
-    };
+    if (commentBody.trim().length > 0) {
+      const tempCommentId = Date.now();
+      const newComment = {
+        username: user.username,
+        body: commentBody,
+        comment_id: tempCommentId,
+        created_at: new Date().toISOString(),
+      };
 
-    setComments((prevComments) =>
-      addOptimisticComment(prevComments, newComment)
-    );
-    setCommentBody("");
+      setComments((prevComments) =>
+        addOptimisticComment(prevComments, newComment)
+      );
+      setCommentBody("");
 
-    postComment(articleId, newComment)
-      .then((serverComment) => {
-        setComments((prevComments) =>
-          replaceOptimisticComment(prevComments, tempCommentId, serverComment)
-        );
-      })
-      .catch((err) => {
-        console.error("Error posting comment:", err);
-        setComments((prevComments) =>
-          removeOptimisticComment(prevComments, tempCommentId)
-        );
-      });
+      postComment(articleId, newComment)
+        .then((serverComment) => {
+          setComments((prevComments) =>
+            replaceOptimisticComment(prevComments, tempCommentId, serverComment)
+          );
+        })
+        .catch((err) => {
+          setError("Error posting comment");
+          setComments((prevComments) =>
+            removeOptimisticComment(prevComments, tempCommentId)
+          );
+        });
+    } else {
+      setError("Comment cannot be empty");
+    }
   }
 
   return (
