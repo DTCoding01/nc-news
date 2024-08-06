@@ -10,6 +10,7 @@ export function getArticles({
   order = "desc",
 } = {}) {
   const query = new URLSearchParams();
+  console.log(topicName)
 
   if (topicName) query.append("topic", topicName);
   if (sortBy) query.append("sort_by", sortBy);

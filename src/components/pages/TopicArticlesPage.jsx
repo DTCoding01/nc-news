@@ -10,7 +10,7 @@ export default function TopicsArticlesPage() {
   const [topicDescription, setTopicDescription] = useState("");
   const [topicArticles, setTopicArticles] = useState([]);
   const { setError } = useError();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTopics()
@@ -26,10 +26,10 @@ export default function TopicsArticlesPage() {
       })
       .catch((error) => {
         setError(error.message);
-        navigate("/error")
+        navigate("/error");
       });
 
-    getArticles(topicSlug)
+    getArticles({ topicName: topicSlug })
       .then((articles) => {
         setTopicArticles(articles);
       })
