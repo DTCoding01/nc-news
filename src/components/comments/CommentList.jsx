@@ -1,10 +1,19 @@
-import { useEffect, useState } from "react";
-import { getCommentsByArticleId } from "../../../api";
+import { useContext, useEffect, useState } from "react";
+import { getCommentsByArticleId, postComment } from "../../../api.js";
 import CommentCard from "./CommentCard";
-import '../../css/components/CommentsList.scss'
+import "../../css/components/CommentsList.scss";
+import { UserContext } from "../../contexts/UserContext";
+import {
+  addOptimisticComment,
+  replaceOptimisticComment,
+  removeOptimisticComment,
+} from "../../utils/comments.js";
 
 export default function CommentList({ articleId }) {
+  const { user } = useContext(UserContext);
   const [comments, setComments] = useState([]);
+  const [commentBody, setCommentBody] = useState("");
+
   useEffect(() => {
     if (articleId) {
       getCommentsByArticleId(articleId)
@@ -17,17 +26,68 @@ export default function CommentList({ articleId }) {
     }
   }, [articleId]);
 
+  function handleChange(e) {
+    setCommentBody(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!user) {
+      console.log("User not logged in");
+      return;
+    }
+
+    const tempCommentId = Date.now();
+    const newComment = {
+      username: user.username,
+      body: commentBody,
+      comment_id: tempCommentId,
+      created_at: new Date().toISOString(),
+    };
+
+    setComments((prevComments) =>
+      addOptimisticComment(prevComments, newComment)
+    );
+    setCommentBody("");
+
+    postComment(articleId, newComment)
+      .then((serverComment) => {
+        setComments((prevComments) =>
+          replaceOptimisticComment(prevComments, tempCommentId, serverComment)
+        );
+      })
+      .catch((err) => {
+        console.error("Error posting comment:", err);
+        setComments((prevComments) =>
+          removeOptimisticComment(prevComments, tempCommentId)
+        );
+      });
+  }
+
   return (
     <section className="comments-list">
       <p className="comments-header">Comments | {comments.length}</p>
+      <form onSubmit={handleSubmit} className="comment-form">
+        <label htmlFor="comment-input">
+          <input
+            onChange={handleChange}
+            value={commentBody}
+            type="text"
+            id="comment-input"
+            placeholder="Write a comment..."
+          />
+        </label>
+        <button type="submit" id="submit-comment">
+          Post
+        </button>
+      </form>
       <ul>
-        {comments.map((comment) => {
-          return (
-            <li className="article-list-item" key={comment.comment_id}>
-              <CommentCard comment={comment} />
-            </li>
-          );
-        })}
+        {comments.map((comment) => (
+          <li className="article-list-item" key={comment.comment_id}>
+            <CommentCard comment={comment} />
+          </li>
+        ))}
       </ul>
     </section>
   );

@@ -8,7 +8,7 @@ export default function Footer() {
                 <li><Link to={'/'}>Home</Link></li>
                 <li>Topics</li>
                 <li>Post</li>
-                <li>Account</li>
+                <li><Link to={'/account'}>Account</Link></li>
             </ul>
         </footer>
     )

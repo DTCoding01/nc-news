@@ -1,10 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "../../css/pages/ArticlePage.scss";
 import { useEffect, useState } from "react";
-import { getArticleById, patchArticleVotes } from "../../../api";
-import ArticleCard from "./ArticleCard";
-import { splitContentIntoParagraphs } from "../../utils/articles";
-import CommentList from "../comments/CommentList";
+import { getArticleById, patchArticleVotes } from "../../../api.js";
+import ArticleCard from "../articles/ArticleCard.jsx";
+import { splitContentIntoParagraphs } from "../../utils/articles.js";
+import CommentList from "../comments/CommentList.jsx";
 import {
   getUserVoteFromStorage,
   saveUserVoteToStorage,
@@ -12,8 +12,7 @@ import {
 } from "../../utils/localStorage.js";
 
 export default function ArticlePage() {
-  const location = useLocation();
-  const { articleId } = location.state;
+  const { articleId } = useParams();
   const [article, setArticle] = useState({});
   const [paragraphs, setParagraphs] = useState([]);
   const [articleVotes, setArticleVotes] = useState(0);

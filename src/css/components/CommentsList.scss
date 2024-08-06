@@ -16,6 +16,25 @@
     font-size: 1.2rem;
     font-weight: 1000;
   }
+  .comment-form {
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    margin: 0 0 10px;
+    border: 1px solid #eb1c24;
+    button {
+      height: 25px;
+      width: 10vw;
+    }
+  }
+
+  input {
+    width: 80vw;
+    height: 25px;
+    border: none;
+    border-radius: none;
+  }
+
   ul {
     list-style: none;
   }
