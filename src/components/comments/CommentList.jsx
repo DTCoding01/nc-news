@@ -19,7 +19,7 @@ export default function CommentList({ articleId }) {
 
   return (
     <section className="comments-list">
-      <p className="comments-header">Comments</p>
+      <p className="comments-header">Comments | {comments.length}</p>
       <ul>
         {comments.map((comment) => {
           return (
