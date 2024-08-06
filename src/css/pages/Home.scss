@@ -1,3 +1,9 @@
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #home,
 .topics-articles-page {
   margin-top: 8vh;
@@ -9,6 +15,15 @@
   width: 100%;
   font-family: monospace;
 
+
+  .sort-controls {
+    margin: 5px 0;
+    select {
+      margin: 0 10px;
+      border-radius: 0;
+
+    }
+  }
   ul {
     width: 100%;
     display: flex;
