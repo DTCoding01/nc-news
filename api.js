@@ -24,17 +24,23 @@ export function getCommentsByArticleId(id) {
 
 export function patchArticleVotes(id, vote) {
   return api.patch(`/articles/${id}`, vote).then(({ data: { article } }) => {
-    return article
+    return article;
   });
 }
 
 export function getUserByUsername(username) {
-  return api.get(`/users/${username}`).then(({data: {user}}) =>{
-    return user
-  })
+  return api.get(`/users/${username}`).then(({ data: { user } }) => {
+    return user;
+  });
 }
 export function postComment(id, comment) {
-  return api.post(`articles/${id}/comments`, comment).then(({data: {comment}}) => {
-    return comment
-  })
+  return api
+    .post(`/articles/${id}/comments`, comment)
+    .then(({ data: { comment } }) => {
+      return comment;
+    });
+}
+
+export function deleteComment(id) {
+  return api.delete(`/comments/${id}`).catch((err) => err);
 }

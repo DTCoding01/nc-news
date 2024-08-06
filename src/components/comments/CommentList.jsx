@@ -85,7 +85,7 @@ export default function CommentList({ articleId }) {
       <ul>
         {comments.map((comment) => (
           <li className="article-list-item" key={comment.comment_id}>
-            <CommentCard comment={comment} />
+            <CommentCard comment={comment} setComments={setComments} />
           </li>
         ))}
       </ul>
