@@ -28,5 +28,10 @@ export default function timeAgo(timestamp) {
 }
 
 export function splitContentIntoParagraphs(content) {
- return content.split('.')
+ let splitContent = content.split('. ')
+
+ if (splitContent[splitContent.length - 1] === ".") {
+  splitContent.pop()
+ }
+ return splitContent
 }

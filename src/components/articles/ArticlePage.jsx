@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getArticleById } from "../../../api";
 import ArticleCard from "./ArticleCard";
 import { splitContentIntoParagraphs } from "../../utils/articles";
+import CommentList from "../comments/CommentList";
 export default function ArticlePage() {
   const location = useLocation();
   const { articleId } = location.state;
@@ -22,7 +23,8 @@ export default function ArticlePage() {
           console.error("Error fetching article:", error);
         });
     }
-  }, [articleId]);
+  }, []);
+
 
   return (
     <section className="article-page">
@@ -32,13 +34,14 @@ export default function ArticlePage() {
         if (para.length > 0) {
           return (
             <p className="paragraph" key={index}>
-              {para}.
+              {para}
             </p>
           );
         } else {
           return null;
         }
       })}
+      <CommentList articleId={article.article_id} />
     </section>
   );
 }

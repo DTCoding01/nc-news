@@ -7,7 +7,6 @@ export default function Home() {
 
   useEffect(() => {
     getArticles().then((articles) => {
-      console.log(articles);
       setArticles(articles);
     });
   }, []);

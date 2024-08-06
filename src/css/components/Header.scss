@@ -9,12 +9,16 @@
   width: 100%;
   background-color: white;
   z-index: 1000;
-}
+  .logo {
+    font-family: "Roboto";
+    color: #eb1c24;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+  }
 
-.logo {
-  font-family: "Roboto";
-  color: #eb1c24;
-  font-size: 40px;
-  display: flex;
-  align-items: center;
+  a {
+    text-decoration: none;
+    color: #eb1c24;
+  }
 }
