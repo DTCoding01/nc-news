@@ -35,7 +35,7 @@ export default function AccountDetails() {
         <button onClick={handleClick}>Sign-Out</button>
       </div>
 
-      <ArticlesList articles={articles} />
+      <ArticlesList articles={articles} setArticles={setArticles}showDelete={true}/>
     </section>
   );
 }

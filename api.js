@@ -18,7 +18,7 @@ export function getArticles({
     page,
     limit,
   };
-  
+
   return api
     .get("/articles", { params })
     .then(({ data }) => {
@@ -74,9 +74,13 @@ export function getTopics() {
 }
 
 export function postArticle(article) {
+  return api.post("/articles", article).then(({ data: { post } }) => {
+    return post;
+  });
+}
 
-  return api.post('/articles', article).then(({data: {post}}) => {
-   
-    return post
-  })
+export function deleteArticle(article_id) {
+  return api.delete(`/articles/${article_id}`).catch((err) => {
+    return err;
+  });
 }
