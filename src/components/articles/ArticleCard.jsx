@@ -26,7 +26,7 @@ export default function ArticleCard({ article, setArticles, showDelete }) {
     });
   }
   function handleClick() {
-    article.placeholder ? navigate(`/article/${article.article_id}`) : null;
+    article.placeholder ? null : navigate(`/article/${article.article_id}`);
   }
 
   const altText = `Image for article titled '${article.title}' by ${article.author} on ${article.topic}`;
