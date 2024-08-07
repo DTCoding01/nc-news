@@ -7,7 +7,6 @@ import { useError } from "../../contexts/ErrorContext";
 
 export default function CommentCard({ comment, setComments }) {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
   const { setError } = useError();
 
   function handleClick(e) {

@@ -12,16 +12,22 @@ import {
 } from "../../utils/localStorage.js";
 import { useError } from "../../contexts/ErrorContext.jsx";
 
-export default function ArticlePage() {
+export default function ArticlePage({ placeholderArticle }) {
   const { articleId } = useParams();
   const [article, setArticle] = useState({});
   const [paragraphs, setParagraphs] = useState([]);
   const [articleVotes, setArticleVotes] = useState(0);
   const [userVote, setUserVote] = useState(0);
-  const {setError} = useError()
-  const navigate = useNavigate()
+  const { setError } = useError();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (placeholderArticle) {
+      setArticle(placeholderArticle);
+      const splitBody = splitContentIntoParagraphs(placeholderArticle.body);
+      setParagraphs(splitBody);
+      return;
+    }
     if (articleId) {
       getArticleById(articleId)
         .then((fetchedArticle) => {
@@ -34,11 +40,11 @@ export default function ArticlePage() {
           setUserVote(storedVote);
         })
         .catch((error) => {
-          setError("Article Not Found")
-          navigate("/error")
+          setError("Article Not Found");
+          navigate("/error");
         });
     }
-  }, [articleId]);
+  }, [articleId, placeholderArticle]);
 
   function handleVote(e) {
     const voteType = e.target.id === "upvote-article" ? 1 : -1;
@@ -109,7 +115,7 @@ export default function ArticlePage() {
           return null;
         }
       })}
-      <CommentList articleId={article.article_id} />
+      {!placeholderArticle && <CommentList articleId={article.article_id} />}
     </section>
   );
 }

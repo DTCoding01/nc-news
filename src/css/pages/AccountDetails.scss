@@ -1,0 +1,27 @@
+.account-details {
+
+    div {
+        display: flex;
+    }
+  .my-posts {
+    font-size: 2rem;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  button {
+    height: 50px;
+    width: 150px;
+    background-color: #ff474e;
+    border: none;
+    color: white;
+  }
+
+  button:hover,
+  .clicked {
+    background-color: white;
+    color: #eb1c24;
+    border: 2px solid #eb1c24;
+  }
+}

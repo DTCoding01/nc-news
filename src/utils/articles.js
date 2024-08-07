@@ -1,3 +1,5 @@
+import { getArticles } from "../../api";
+
 export default function timeAgo(timestamp) {
   const now = new Date();
   const postDate = new Date(timestamp);
@@ -28,10 +30,27 @@ export default function timeAgo(timestamp) {
 }
 
 export function splitContentIntoParagraphs(content) {
- let splitContent = content.split('. ')
+  let splitContent = content.split(". ");
 
- if (splitContent[splitContent.length - 1] === ".") {
-  splitContent.pop()
- }
- return splitContent
+  if (splitContent[splitContent.length - 1] === ".") {
+    splitContent.pop();
+  }
+  return splitContent;
+}
+
+export function fetchAllArticles() {
+  let page = 1;
+  let limit = 10;
+
+  return getArticles()
+    .then(({ totalCount }) => {
+      limit = totalCount;
+      
+    })
+    .then(() => {
+      return getArticles({page, limit});
+    })
+    .then(({ articles }) => {
+      return articles;
+    });
 }

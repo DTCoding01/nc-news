@@ -23,6 +23,10 @@ export default function CommentList({ articleId }) {
           setComments(comments);
         })
         .catch((error) => {
+          console.log(error)
+          if (error.response.status === 404) {
+            return
+          }
           setError("Error fetching comments");
 
         });

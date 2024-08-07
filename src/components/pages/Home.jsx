@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     getArticles({ sortBy, order })
-      .then((articles) => {
+      .then(({articles}) => {
         setArticles(articles);
       })
       .catch((err) => {
