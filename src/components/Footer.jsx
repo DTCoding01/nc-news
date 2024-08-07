@@ -11,7 +11,7 @@ export default function Footer() {
         <li>
           <Link to={"/topics"}>Topics</Link>
         </li>
-        <li>Post</li>
+        <li><Link to={"/post"}>Post</Link></li>
         <li>
           <Link to={"/account"}>Account</Link>
         </li>

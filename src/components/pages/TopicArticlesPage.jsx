@@ -30,7 +30,7 @@ export default function TopicsArticlesPage() {
       });
 
     getArticles({ topicName: topicSlug })
-      .then((articles) => {
+      .then(({articles}) => {
         setTopicArticles(articles);
       })
       .catch((error) => {

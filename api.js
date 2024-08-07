@@ -8,17 +8,27 @@ export function getArticles({
   topicName = "",
   sortBy = "created_at",
   order = "desc",
+  page = 1,
+  limit = 10,
 } = {}) {
-  const query = new URLSearchParams();
-  console.log(topicName)
-
-  if (topicName) query.append("topic", topicName);
-  if (sortBy) query.append("sort_by", sortBy);
-  if (order) query.append("order", order);
+  const params = {
+    ...(topicName && { topic: topicName }),
+    ...(sortBy && { sort_by: sortBy }),
+    ...(order && { order: order }),
+    page,
+    limit,
+  };
+  
   return api
-    .get(`/articles?${query.toString()}`)
-    .then(({ data: { articles } }) => {
-      return articles;
+    .get("/articles", { params })
+    .then(({ data }) => {
+      const articles = data.articles;
+      const totalCount = data.total_count;
+      return { totalCount, articles };
+    })
+    .catch((error) => {
+      console.error("Error fetching articles:", error);
+      throw error;
     });
 }
 
@@ -61,4 +71,12 @@ export function getTopics() {
   return api.get("/topics").then(({ data: { rows } }) => {
     return rows;
   });
+}
+
+export function postArticle(article) {
+
+  return api.post('/articles', article).then(({data: {post}}) => {
+   
+    return post
+  })
 }
