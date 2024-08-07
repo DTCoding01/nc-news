@@ -11,6 +11,7 @@ import { useError } from "../../contexts/ErrorContext";
 export default function PostArticlePage() {
   const { user } = useContext(UserContext);
   const { setError } = useError();
+  
   const navigate = useNavigate(); 
 
   const defaultArticle = {

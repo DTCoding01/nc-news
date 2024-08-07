@@ -11,6 +11,8 @@ import {
   removeUserVoteFromStorage,
 } from "../../utils/localStorage.js";
 import { useError } from "../../contexts/ErrorContext.jsx";
+import { useIsLoading } from "../../contexts/IsLoading.jsx";
+import LoadingAnimation from "../LoadingAnimation.jsx";
 
 export default function ArticlePage({ placeholderArticle }) {
   const { articleId } = useParams();
@@ -19,16 +21,20 @@ export default function ArticlePage({ placeholderArticle }) {
   const [articleVotes, setArticleVotes] = useState(0);
   const [userVote, setUserVote] = useState(0);
   const { setError } = useError();
+  const { isLoading, setIsLoading } = useIsLoading();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (placeholderArticle) {
+      setIsLoading(true);
       setArticle(placeholderArticle);
       const splitBody = splitContentIntoParagraphs(placeholderArticle.body);
       setParagraphs(splitBody);
+      setIsLoading(false);
       return;
     }
     if (articleId) {
+      setIsLoading(true);
       getArticleById(articleId)
         .then((fetchedArticle) => {
           setArticle(fetchedArticle);
@@ -38,6 +44,7 @@ export default function ArticlePage({ placeholderArticle }) {
 
           const storedVote = getUserVoteFromStorage(articleId);
           setUserVote(storedVote);
+          setIsLoading(false);
         })
         .catch((error) => {
           setError("Article Not Found");
@@ -77,7 +84,9 @@ export default function ArticlePage({ placeholderArticle }) {
       }
     });
   }
-
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
   return (
     <section className="article-page">
       <ArticleCard article={article} />

@@ -5,13 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import "./css/body.css";
 import { UserProvider } from "./contexts/UserContext.jsx";
 import { ErrorProvider } from "./contexts/ErrorContext.jsx";
+import { IsLoadingProvider } from "./contexts/IsLoading.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <UserProvider>
       <ErrorProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <IsLoadingProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </IsLoadingProvider>
       </ErrorProvider>
     </UserProvider>
   </BrowserRouter>

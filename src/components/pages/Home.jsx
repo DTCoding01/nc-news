@@ -4,19 +4,24 @@ import { useEffect, useState } from "react";
 import ArticlesList from "../articles/ArticlesList";
 import { useError } from "../../contexts/ErrorContext";
 import { useSearchParams } from "react-router-dom";
+import { useIsLoading } from "../../contexts/IsLoading";
+import LoadingAnimation from "../LoadingAnimation";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
   const { setError } = useError();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isLoading, setIsLoading } = useIsLoading();
 
   const sortBy = searchParams.get("sort_by") || "created_at";
   const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
+    setIsLoading(true);
     getArticles({ sortBy, order })
-      .then(({articles}) => {
+      .then(({ articles }) => {
         setArticles(articles);
+        setIsLoading(false);
       })
       .catch((err) => {
         setError("Error fetching Articles: " + err.message);
@@ -50,7 +55,7 @@ export default function Home() {
           </select>
         </label>
       </div>
-      <ArticlesList articles={articles} />
+      {isLoading ? <LoadingAnimation /> : <ArticlesList articles={articles} />}
     </section>
   );
 }
