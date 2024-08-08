@@ -24,12 +24,27 @@
       list-style: none;
       width: 100%;
     }
-    li:hover {
+    .topic-option:hover {
       background-color: #eb1c24;
 
       transform: scale(0.9);
     }
     li:hover a {
+      color: white;
+    }
+
+    .add-topic {
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      height: 60px;
+
+    }
+
+    .add-topic:hover {
+      font-size: 3rem;
       color: white;
     }
 

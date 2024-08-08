@@ -84,3 +84,9 @@ export function deleteArticle(article_id) {
     return err;
   });
 }
+
+export function postTopic(topic) {
+  return api.post("/topics", topic).then(({ data: { topic } }) => {
+    return topic;
+  });
+}

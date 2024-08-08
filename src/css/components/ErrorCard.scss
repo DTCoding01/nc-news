@@ -12,6 +12,9 @@
   font-family: monospace;
 
   .error-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #eb1c24;
     color: white;
     padding: 20px;
@@ -21,6 +24,7 @@
   }
   .close-button {
     margin-top: 10px;
+    width: 100%;
     padding: 8px 16px;
     background-color: white;
     color: #eb1c24;
