@@ -89,6 +89,7 @@ export default function ArticlePage({ placeholderArticle }) {
   }
   return (
     <section className="article-page">
+      <div className="article-section">
       <ArticleCard article={article} />
       <div className="author-and-votes">
         <p className="author">{article.author}</p>
@@ -124,6 +125,7 @@ export default function ArticlePage({ placeholderArticle }) {
           return null;
         }
       })}
+      </div>
       {!placeholderArticle && <CommentList articleId={article.article_id} />}
     </section>
   );

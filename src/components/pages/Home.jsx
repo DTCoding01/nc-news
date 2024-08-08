@@ -1,4 +1,3 @@
-import { getArticles } from "../../../api";
 import "../../css/pages/Home.scss";
 import { useEffect, useState } from "react";
 import ArticlesList from "../articles/ArticlesList";
@@ -6,6 +5,7 @@ import { useError } from "../../contexts/ErrorContext";
 import { useSearchParams } from "react-router-dom";
 import { useIsLoading } from "../../contexts/IsLoading";
 import LoadingAnimation from "../LoadingAnimation";
+import { fetchAllArticles } from "../../utils/articles";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -18,15 +18,17 @@ export default function Home() {
 
   useEffect(() => {
     setIsLoading(true);
-    getArticles({ sortBy, order })
-      .then(({ articles }) => {
+    fetchAllArticles({ sortBy, order })
+      .then((articles) => {
         setArticles(articles);
-        setIsLoading(false);
       })
       .catch((err) => {
         setError("Error fetching Articles: " + err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [sortBy, order, setError]);
+  }, [sortBy, order, setError, setIsLoading]);
 
   const handleSortChange = (e) => {
     setSearchParams({ sort_by: e.target.value, order });

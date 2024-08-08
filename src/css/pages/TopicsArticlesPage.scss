@@ -1,26 +1,18 @@
-.topics-articles-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.topic-header {
+  width: 100%;
+  margin: 10px 0;
+  background-color: #eb1c24;
+  padding: 20px;
+  color: white;
+  h2 {
+    font-size: 2rem;
+  }
 
-    .topic-header {
-        background-color: hsl(358, 84%, 52%);
-        width: 90vw;
-        color: white;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
+  ul {
+    width: 100%;
 
-        .topic-slug {
-            font-size: 2rem;
-            width: 100%;
-        }
-        p {
-            align-self: flex-end;
-            width: 100%;
-            
-        }
+    li {
+      width: 100%;
     }
-    
+  }
 }
-

@@ -1,4 +1,4 @@
-
+import "../../css/components/ArticlesList.scss"
 import ArticleCard from "./ArticleCard";
 
 export default function ArticlesList({

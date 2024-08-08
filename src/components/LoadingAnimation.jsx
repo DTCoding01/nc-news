@@ -1,9 +1,19 @@
+import React from "react";
 import Lottie from "lottie-react";
 import animationData from "../assets/LoadingAnimation.json";
-export default function LoadingAnimation() {
+import '../css/components/LoadingAnimation.scss'
+
+const LoadingAnimation = React.memo(() => {
+ 
   return (
     <div className="loading">
-      <Lottie animationData={animationData} />
+      <Lottie
+        key="loading-animation"
+        animationData={animationData}
+        loop={true}
+      />
     </div>
   );
-}
+});
+
+export default LoadingAnimation;

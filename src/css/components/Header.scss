@@ -1,6 +1,8 @@
+
+
 .header {
   height: 8vh;
-  border-bottom: 2px solid #eb1c24;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,14 +10,14 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: white;
   z-index: 1000;
+  border-bottom: 3px solid #eb1c24;
+
   .logo {
     font-family: "Roboto";
     color: #eb1c24;
+    align-self: flex-end;
     font-size: 40px;
-    display: flex;
-    align-items: center;
   }
 
   a {
@@ -24,6 +26,9 @@
   }
 
   img {
+    width: 100px;
     height: 100%;
+    object-fit: contain;
+    padding: none;
   }
 }

@@ -1,49 +1,19 @@
 .account-details {
   display: flex;
-  flex-direction: center;
-  align-items: center;
-
-  div {
+  .account-details-header {
+    width: 50%;
     display: flex;
+    color: black;
+    .my-posts {
+      font-size: 2rem;
+    }
+
+
   }
-  .my-posts {
-    font-size: 2rem;
-    align-self: center;
+
+  .delete-article-button {
     width: 100%;
-    text-align: center;
-  }
-
-  button {
-    height: 50px;
-    width: 150px;
-    background-color: #ff474e;
-    border: none;
-    color: white;
-  }
-
-  button:hover,
-  .clicked {
-    background-color: white;
-    color: #eb1c24;
-    border: 2px solid #eb1c24;
-  }
-
-  .article-list-card {
-    border-bottom: none;
-  }
-
-  .account-article {
-    border-bottom: 1px solid #eb1c24;
-    width: 90vw;
-    padding-bottom: 20px;
-  }
-
-  .loading {
-    margin: 40px;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
+    height: 40px;
+    margin-bottom: 10px;
   }
 }

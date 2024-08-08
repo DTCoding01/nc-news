@@ -1,0 +1,11 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.topics-page {
+    .loading{
+        height: 40%;
+    }
+}

@@ -25,15 +25,9 @@ export default function TopicsPage() {
       });
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="loading">
-        <LoadingAnimation />;
-      </div>
-    );
-  }
   return (
     <section className="topics-page">
+      {isLoading && <LoadingAnimation />}
       <ul>
         {topics.map((topic) => (
           <li key={topic.slug}>

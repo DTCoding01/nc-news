@@ -19,7 +19,7 @@ function App() {
   const { user } = useContext(UserContext);
 
   return (
-    <>
+    <main>
       <Header />
       <ErrorCard message={error} onClose={clearError} />
       <Routes>
@@ -36,7 +36,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
-    </>
+    </main>
   );
 }
 

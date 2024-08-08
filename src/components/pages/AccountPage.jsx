@@ -34,7 +34,6 @@ export default function AccountPage() {
     <section className="log-in-page">
       <form onSubmit={handleSubmit} className="log-in-form">
         <label htmlFor="log-in-input">
-          Username
           <select id="log-in-input" value={inputValue} onChange={handleChange}>
             <option value="tickle122">tickle122</option>
             <option value="grumpy19">grumpy19</option>

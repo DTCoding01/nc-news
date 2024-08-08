@@ -2,9 +2,8 @@ import { useContext } from "react";
 import timeAgo from "../../utils/articles";
 import { UserContext } from "../../contexts/UserContext";
 import { deleteComment } from "../../../api";
-import { useNavigate } from "react-router-dom";
 import { useError } from "../../contexts/ErrorContext";
-
+import "../../css/components/CommentCard.scss";
 export default function CommentCard({ comment, setComments }) {
   const { user } = useContext(UserContext);
   const { setError } = useError();
@@ -24,9 +23,8 @@ export default function CommentCard({ comment, setComments }) {
 
   return (
     <section className="comment">
-      <div>
-        <p className="comment-author">{comment.author} |</p>
-        <p className="comment-posted">{timeAgo(comment.created_at)}</p>
+      <div className="comment-details">
+        <p className="comment-author">{comment.author} | {timeAgo(comment.created_at)}</p>
       </div>
 
       <p className="comment-body">{comment.body}</p>

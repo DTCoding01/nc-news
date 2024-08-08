@@ -1,3 +1,4 @@
+import "../../css/components/ArticleCard.scss";
 import { useNavigate } from "react-router-dom";
 import timeAgo from "../../utils/articles.js";
 import { deleteArticle } from "../../../api";
@@ -5,7 +6,9 @@ import { useError } from "../../contexts/ErrorContext";
 export default function ArticleCard({ article, setArticles, showDelete }) {
   const navigate = useNavigate();
   const setError = useError();
-  function handleDelete() {
+  function handleDelete(e) {
+    e.stopPropagation();
+
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this article?"
     );
@@ -38,7 +41,11 @@ export default function ArticleCard({ article, setArticles, showDelete }) {
       </div>
       <h2>{article.title}</h2>
       <img alt={altText} src={article.article_img_url} />
-      {showDelete && <button onClick={handleDelete}>DELETE</button>}
+      {showDelete && (
+        <button className="delete-article-button" onClick={handleDelete}>
+          DELETE
+        </button>
+      )}
     </article>
   );
 }

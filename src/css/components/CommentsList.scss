@@ -1,77 +1,39 @@
 .comments-list {
-  width: 90vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 4vh;
-  padding-top: 10px;
-  border-top: 1px solid #eb1c24;
-  font-size: 1rem;
+  width: 100%;
+  border-top: 1px solid#eb1c24;
+  margin: 10px 0 0;
+  padding: 10px 0;
 
   .comments-header {
-    align-self: flex-start;
-    padding-bottom: 8px;
-    margin-bottom: 4px;
-    font-size: 1.2rem;
     font-weight: 1000;
+    font-size: 1.3rem;
   }
-  .comment-form {
-    width: 90vw;
+  form {
+    width: 100%;
     display: flex;
-    align-items: center;
-    margin: 0 0 10px;
-    border: 1px solid #eb1c24;
+    margin: 5px 0 10px;
+    border-bottom: 1px solid#eb1c24;
+    padding: 10px 0;
+    label {
+      width: 90%;
+
+      input {
+        width: 100%;
+        height: 30px;
+        padding: 5px;
+      }
+    }
     button {
-      height: 25px;
-      width: 10vw;
+      width: 10%;
     }
   }
 
-  input {
-    width: 80vw;
-    height: 25px;
-    border: none;
-    border-radius: none;
-  }
-
   ul {
-    list-style: none;
-  }
+    width: 100%;
 
-  .comment {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid #eb1c24;
-    padding: 4px 0;
-  }
-
-  div {
-    display: flex;
-    margin: 10px 0 5px;
-    gap: 10px;
-  }
-  .comment-author,
-  .comment-votes {
-    font-weight: 1000;
-  }
-
-  button {
-    width: 25px;
-    height: 18px;
-    background-color: #ff474e;
-    border: none;
-    color: white;
-  }
-  button:hover {
-    background-color: white;
-    color: #eb1c24;
-    border: 2px solid #eb1c24;
-  }
-
-  .delete-comment {
-    
-    background-color: black;
-    
+    li {
+      width: 100%;
+      list-style: none;
+    }
   }
 }

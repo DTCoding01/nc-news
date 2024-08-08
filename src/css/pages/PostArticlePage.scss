@@ -1,67 +1,51 @@
+.post-article-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 5vh;
+}
+
 .post-form {
-  width: 80vw;
-  border-bottom: 1px solid #eb1c24;
-  padding: 20px;
+  max-width: 500px;
+  height: 500px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
+}
 
-  input {
-    width: 70%;
-    height: 30px;
-    padding: 10px;
-  }
+.post-form input,
+.post-form select,
+.post-form textarea,
+.post-form button {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+}
 
-  textarea {
-    height: 100px;
-    width: 70%;
-    padding: 10px;
-  }
-
-  button {
-    height: 50px;
-    width: 100px;
-    background-color: #ff474e;
-    border: none;
-    color: white;
-  }
-
-  button:hover,
-  .clicked {
-    background-color: white;
-    color: #eb1c24;
-    border: 2px solid #eb1c24;
-  }
+.post-form textarea {
+  height: 200px;
 }
 
 .example-article {
-  margin-top: -40px;
- 
-  padding: 20px;
-  .article-page,
-  .topic-and-time {
-    width: 70vw;
+  max-width: 500px;
+}
 
-    
-    img {
-      width: 60vw;
-    }
+.example-article .article-page {
+  width: 100%;
+  height: 800px;
+  border: 3px solid#eb1c24;
+}
 
-    .author-and-votes {
-      width: 60vw;
-    }
+@media (max-width: 1000px) {
+  .post-article-page {
+    flex-direction: column;
+    margin-top: 10vh;
 
-    p {
-      width: 60vw;
+    form {
+      margin-bottom: -70px;
     }
-
-    h2 {
-      width: 60vw;
-      align-self: center;
-    }
-  }
-  .topic-and-time {
-    align-self: center;
   }
 }

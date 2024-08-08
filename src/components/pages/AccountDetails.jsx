@@ -33,7 +33,7 @@ export default function AccountDetails() {
 
   return (
     <section className="account-details">
-      <div>
+      <div className="account-details-header">
         <p className="my-posts">My Posts</p>
         <button onClick={handleClick}>Sign-Out</button>
       </div>

@@ -38,17 +38,17 @@ export function splitContentIntoParagraphs(content) {
   return splitContent;
 }
 
-export function fetchAllArticles() {
+export function fetchAllArticles({ sortBy = "created_at", order = "desc", topicName = ""} = {}) {
   let page = 1;
   let limit = 10;
 
-  return getArticles()
+
+  return getArticles({ sortBy, order, topicName })
     .then(({ totalCount }) => {
       limit = totalCount;
-      
     })
     .then(() => {
-      return getArticles({page, limit});
+      return getArticles({ page, limit, sortBy, order, topicName });
     })
     .then(({ articles }) => {
       return articles;
