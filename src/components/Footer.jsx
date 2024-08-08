@@ -14,22 +14,22 @@ export default function Footer() {
       <ul>
         <li>
           <Link to={"/"}>
-            <FontAwesomeIcon icon={faHouse} />
+            <FontAwesomeIcon icon={faHouse} size="xl" />
           </Link>
         </li>
         <li>
           <Link to={"/topics"}>
-            <FontAwesomeIcon icon={faBookOpen} />
+            <FontAwesomeIcon icon={faBookOpen} size="xl" />
           </Link>
         </li>
         <li>
           <Link to={"/post"}>
-            <FontAwesomeIcon icon={faCirclePlus} />
+            <FontAwesomeIcon icon={faCirclePlus} size="xl" />
           </Link>
         </li>
         <li>
           <Link to={"/account"}>
-            <FontAwesomeIcon icon={faUserLarge} />
+            <FontAwesomeIcon icon={faUserLarge} size="xl" />
           </Link>
         </li>
       </ul>

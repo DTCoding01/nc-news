@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getTopics } from "../../../api";
-import ArticleCard from "../articles/ArticleCard";
+import { Link } from "react-router-dom";
 import "../../css/pages/TopicsArticlesPage.scss";
 import { useError } from "../../contexts/ErrorContext";
 import { fetchAllArticles } from "../../utils/articles";
@@ -41,6 +41,11 @@ export default function TopicsArticlesPage() {
         setIsLoading(false);
       })
       .catch((error) => {
+        if (error.response.status === 404) {
+          setTopicArticles([]);
+          setIsLoading(false);
+          return;
+        }
         setError(error.message);
       });
   }, [topicSlug, setError]);
@@ -52,7 +57,16 @@ export default function TopicsArticlesPage() {
         <p>{topicDescription || "Loading description..."}</p>
       </div>
       {isLoading && <LoadingAnimation />}
-      <ArticlesList articles={topicArticles} />
+      <Link to="/post" state={{ topic: topicSlug }}>
+        ADD NEW ARTICLE
+      </Link>
+      {topicArticles.length === 0 ? (
+        <div className="empty-topic">
+          <li className="empty-topic-message">No Articles Yet...</li>
+        </div>
+      ) : (
+        <ArticlesList articles={topicArticles} />
+      )}
     </section>
   );
 }

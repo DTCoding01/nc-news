@@ -5,23 +5,25 @@ import ArticlePage from "./ArticlePage";
 import { UserContext } from "../../contexts/UserContext";
 import placeHolderImage from "../../assets/elementor-placeholder-image.webp";
 import validateImageUrl from "../../utils/postArticles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useError } from "../../contexts/ErrorContext";
 
 export default function PostArticlePage() {
   const { user } = useContext(UserContext);
   const { setError } = useError();
-  
-  const navigate = useNavigate(); 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const topicSlug = location.state?.topic || "coding";
 
   const defaultArticle = {
     title: "Your Title",
     author: user.username,
-    topic: "coding",
+    topic: topicSlug,
     created_at: Date.now(),
     article_img_url: placeHolderImage,
     body: "",
-    placeholder: true
+    placeholder: true,
   };
 
   const [topics, setTopics] = useState([]);
@@ -53,7 +55,7 @@ export default function PostArticlePage() {
     if (article.body.length > 0 && isImageValid) {
       postArticle(article)
         .then((postedArticle) => {
-     navigate(`/article/${postedArticle.article_id}`, { replace: true });
+          navigate(`/article/${postedArticle.article_id}`, { replace: true });
         })
         .catch((err) => {
           setError("Error Posting Article");

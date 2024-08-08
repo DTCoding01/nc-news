@@ -1,18 +1,44 @@
-.topic-header {
-  width: 100%;
-  margin: 10px 0;
-  background-color: #eb1c24;
-  padding: 20px;
-  color: white;
-  h2 {
-    font-size: 2rem;
+.topic-articles-page {
+  .topic-header,
+  .empty-topic {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #eb1c24;
+    padding: 20px;
+    color: white;
+    h2 {
+      font-size: 2rem;
+    }
+
+    ul {
+      width: 100%;
+
+      li {
+        width: 100%;
+      }
+    }
   }
 
-  ul {
-    width: 100%;
-
+  .empty-topic {
     li {
-      width: 100%;
+      list-style: none;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    width: 100%;
+    border: 5px solid #eb1c24;
+    padding: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    &:hover {
+      background-color: #eb1c24;
+      color: white;
     }
   }
 }

@@ -84,48 +84,50 @@ export default function ArticlePage({ placeholderArticle }) {
       }
     });
   }
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
+
   return (
     <section className="article-page">
-      <div className="article-section">
-      <ArticleCard article={article} />
-      <div className="author-and-votes">
-        <p className="author">{article.author}</p>
-        <div className="article-buttons">
-          <p className={`article-votes`}>{articleVotes}</p>
-          <button
-            id="upvote-article"
-            className={userVote === 1 ? "clicked" : null}
-            onClick={handleVote}
-            aria-label="Upvote article"
-          >
-            +
-          </button>
-          <button
-            id="downvote-article"
-            className={userVote === -1 ? "clicked" : null}
-            onClick={handleVote}
-            aria-label="Downvote article"
-          >
-            -
-          </button>
-        </div>
-      </div>
+      {isLoading ? (
+        <LoadingAnimation />
+      ) : (
+        <div className="article-section">
+          <ArticleCard article={article} />
+          <div className="author-and-votes">
+            <p className="author">{article.author}</p>
+            <div className="article-buttons">
+              <p className={`article-votes`}>{articleVotes}</p>
+              <button
+                id="upvote-article"
+                className={userVote === 1 ? "clicked" : null}
+                onClick={handleVote}
+                aria-label="Upvote article"
+              >
+                +
+              </button>
+              <button
+                id="downvote-article"
+                className={userVote === -1 ? "clicked" : null}
+                onClick={handleVote}
+                aria-label="Downvote article"
+              >
+                -
+              </button>
+            </div>
+          </div>
 
-      {paragraphs.map((para, index) => {
-        if (para.length > 0) {
-          return (
-            <p className="paragraph" key={index}>
-              {para}
-            </p>
-          );
-        } else {
-          return null;
-        }
-      })}
-      </div>
+          {paragraphs.map((para, index) => {
+            if (para.length > 0) {
+              return (
+                <p className="paragraph" key={index}>
+                  {para}
+                </p>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+      )}
       {!placeholderArticle && <CommentList articleId={article.article_id} />}
     </section>
   );
