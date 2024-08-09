@@ -29,7 +29,7 @@ export default function ArticleCard({ article, setArticles, showDelete }) {
     });
   }
   function handleClick() {
-    article.placeholder ? null : navigate(`/article/${article.article_id}`);
+    article.placeholder ? null : navigate(`/articles/${article.article_id}`);
   }
 
   const altText = `Image for article titled '${article.title}' by ${article.author} on ${article.topic}`;

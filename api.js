@@ -5,6 +5,7 @@ const api = axios.create({
 });
 
 export function getArticles({
+  author = "",
   topicName = "",
   sortBy = "created_at",
   order = "desc",
@@ -12,6 +13,7 @@ export function getArticles({
   limit = 10,
 } = {}) {
   const params = {
+    ...(author && { author: author }),
     ...(topicName && { topic: topicName }),
     ...(sortBy && { sort_by: sortBy }),
     ...(order && { order: order }),
@@ -47,6 +49,12 @@ export function getCommentsByArticleId(id) {
 export function patchArticleVotes(id, vote) {
   return api.patch(`/articles/${id}`, vote).then(({ data: { article } }) => {
     return article;
+  });
+}
+
+export function patchCommentVotes(id, vote) {
+  return api.patch(`/comments/${id}`, vote).then(({ data: { comment } }) => {
+    return comment;
   });
 }
 
@@ -89,4 +97,33 @@ export function postTopic(topic) {
   return api.post("/topics", topic).then(({ data: { topic } }) => {
     return topic;
   });
+}
+
+export function followTopic(username, body) {
+  return api.post(`/users/${username}/follow-topic`, body).then(({ data }) => {
+    return data;
+  });
+}
+
+export function unfollowTopic(username, topicSlug) {
+  return api
+    .delete(`/users/${username}/unfollow-topic/${topicSlug}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error("Error in unfollowTopic:", error);
+      throw error;
+    });
+}
+
+export function fetchFollowings(username) {
+  return api
+    .get(`/users/${username}/followings`)
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => {
+      console.log(err, "err");
+    });
 }

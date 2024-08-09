@@ -55,7 +55,7 @@ export default function PostArticlePage() {
     if (article.body.length > 0 && isImageValid) {
       postArticle(article)
         .then((postedArticle) => {
-          navigate(`/article/${postedArticle.article_id}`, { replace: true });
+          navigate(`/articles/${postedArticle.article_id}`, { replace: true });
         })
         .catch((err) => {
           setError("Error Posting Article");

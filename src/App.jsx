@@ -13,6 +13,7 @@ import ErrorCard from "./components/ErrorCard.jsx";
 import ErrorPage from "./components/pages/ErrorPage.jsx";
 import { UserContext } from "./contexts/UserContext.jsx";
 import PostArticlePage from "./components/pages/PostArticlePage.jsx";
+import FollowingsPage from "./components/pages/FollowingsPage.jsx";
 
 function App() {
   const { error, clearError } = useError();
@@ -23,8 +24,9 @@ function App() {
       <Header />
       <ErrorCard message={error} onClose={clearError} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/article/:articleId" element={<ArticlePage />} />
+        <Route path="/" element={<FollowingsPage />} />
+        <Route path="/articles" element={<Home />} />
+        <Route path="/articles/:articleId" element={<ArticlePage />} />
         <Route
           path="/account"
           element={user ? <AccountDetails user={user} /> : <AccountPage />}
