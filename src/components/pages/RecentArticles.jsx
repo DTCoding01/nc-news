@@ -40,10 +40,18 @@ export default function Home() {
 
   return (
     <section id="home">
-      <div className="sort-controls">
+      <div
+        className="sort-controls"
+        aria-describedby="sort-controls-description"
+      >
         <label>
           Sort by:
-          <select value={sortBy} onChange={handleSortChange}>
+          <select
+            id="sort-by"
+            value={sortBy}
+            onChange={handleSortChange}
+            aria-required="true"
+          >
             <option value="created_at">Date</option>
             <option value="votes">Votes</option>
             <option value="comment_count">Comment Count</option>
@@ -51,13 +59,24 @@ export default function Home() {
         </label>
         <label>
           Order:
-          <select value={order} onChange={handleOrderChange}>
+          <select
+            id="order"
+            value={order}
+            onChange={handleOrderChange}
+            aria-required="true"
+          >
             <option value="desc">Descending</option>
             <option value="asc">Ascending</option>
           </select>
         </label>
       </div>
-      {isLoading ? <LoadingAnimation /> : <ArticlesList articles={articles} />}
+      {isLoading ? (
+        <div className="loading-container" role="status" aria-live="polite">
+          <LoadingAnimation />
+        </div>
+      ) : (
+        <ArticlesList articles={articles} />
+      )}
     </section>
   );
 }

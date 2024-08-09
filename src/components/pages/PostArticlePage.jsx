@@ -67,18 +67,29 @@ export default function PostArticlePage() {
 
   return (
     <section className="post-article-page">
-      <form className="post-form" onSubmit={handleSubmit}>
+      <form
+        className="post-form"
+        onSubmit={handleSubmit}
+        aria-describedby="post-form-description"
+      >
         <input
           onChange={handleChange}
           id="title"
           placeholder="Enter your Title..."
+          aria-required="true"
         />
         <input
           onChange={handleChange}
           id="article_img_url"
           placeholder="Enter your Image URL..."
+          aria-required="true"
         />
-        <select value={article.topic} onChange={handleChange} id="topic">
+        <select
+          value={article.topic}
+          onChange={handleChange}
+          id="topic"
+          aria-required="true"
+        >
           {topics.map((topic) => (
             <option key={topic.slug} value={topic.slug}>
               {topic.slug}
@@ -91,12 +102,16 @@ export default function PostArticlePage() {
           onChange={handleChange}
           id="body"
           placeholder="Enter your Article content..."
+          aria-required="true"
         />
         <button type="submit" className="post-article-button">
           POST
         </button>
       </form>
-      <div className="example-article">
+      <div
+        className="example-article"
+        aria-labelledby="example-article-heading"
+      >
         <ArticlePage placeholderArticle={article} />
       </div>
     </section>

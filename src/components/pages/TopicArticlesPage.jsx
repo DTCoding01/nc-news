@@ -51,18 +51,34 @@ export default function TopicsArticlesPage() {
   }, [topicSlug, setError]);
 
   return (
-    <section className="topic-articles-page">
+    <section className="topic-articles-page" aria-labelledby="topic-heading">
       <div className="topic-header">
-        <h2 className="topic-slug">{topicSlug}</h2>
-        <p>{topicDescription || "Loading description..."}</p>
+        <h1 id="topic-heading" className="topic-slug">
+          {topicSlug}
+        </h1>
+        <p id="topic-description">
+          {topicDescription || "Loading description..."}
+        </p>
       </div>
-      {isLoading && <LoadingAnimation />}
-      <Link to="/post" state={{ topic: topicSlug }}>
+      {isLoading && (
+        <div className="loading-container"role="status" aria-live="polite">
+          <LoadingAnimation />
+        </div>
+      )}
+      <Link
+        to="/post"
+        state={{ topic: topicSlug }}
+        className="add-article-link"
+        aria-label={`Add a new article to ${topicSlug}`}
+      >
         ADD NEW ARTICLE
       </Link>
       {topicArticles.length === 0 ? (
-        <div className="empty-topic">
-          <li className="empty-topic-message">No Articles Yet...</li>
+        <div className="empty-topic" aria-labelledby="empty-topic-heading">
+          <h2 id="empty-topic-heading" className="visually-hidden">
+            No Articles Available
+          </h2>
+          <p className="empty-topic-message">No Articles Yet...</p>
         </div>
       ) : (
         <ArticlesList articles={topicArticles} />

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./components/pages/Home";
+import Home from "./components/pages/RecentArticles.jsx";
 import ArticlePage from "./components/pages/ArticlePage";
 import AccountPage from "./components/pages/AccountPage";
 import AccountDetails from "./components/pages/AccountDetails.jsx";
@@ -14,6 +14,7 @@ import ErrorPage from "./components/pages/ErrorPage.jsx";
 import { UserContext } from "./contexts/UserContext.jsx";
 import PostArticlePage from "./components/pages/PostArticlePage.jsx";
 import FollowingsPage from "./components/pages/FollowingsPage.jsx";
+import LoadingAnimation from "./components/LoadingAnimation.jsx";
 
 function App() {
   const { error, clearError } = useError();

@@ -11,7 +11,11 @@ export default function Header() {
         <h1 className="logo">
           <Link to={"/articles"}>NCNews</Link>
         </h1>
-        {user && <img src={user.avatar_url}></img>}
+        {user && (
+          <Link to={'/account'}>
+            <img src={user.avatar_url}></img>
+          </Link>
+        )}
       </div>
     </header>
   );

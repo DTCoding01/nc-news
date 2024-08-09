@@ -110,20 +110,27 @@ export function unfollowTopic(username, topicSlug) {
     .delete(`/users/${username}/unfollow-topic/${topicSlug}`)
     .then((response) => {
       return response;
-    })
-    .catch((error) => {
-      console.error("Error in unfollowTopic:", error);
-      throw error;
+    });
+}
+
+export function followUser(username, body) {
+  console.log(username, body)
+  return api.post(`/users/${username}/follow-user`, body).then(({ data }) => {
+    console.log(data)
+    return data;
+  });
+}
+
+export function unfollowUser(currUser, username) {
+  return api
+    .delete(`/users/${currUser}/unfollow-user/${username}`)
+    .then((response) => {
+      return response;
     });
 }
 
 export function fetchFollowings(username) {
-  return api
-    .get(`/users/${username}/followings`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(err, "err");
-    });
+  return api.get(`/users/${username}/followings`).then(({ data }) => {
+    return data;
+  });
 }

@@ -1,8 +1,18 @@
 .following-articles {
-    .your-followed {
-        font-size: 2rem;
-        width: 100%;
-        border-bottom: 1px solid red;
-        margin-bottom: 10px;
+  font-family: monospace;
+
+  .followed-p {
+    font-size: 2rem;
+    width: 100%;
+    border-bottom: 1px solid red;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .following-header {
+    width: 100%;
+
+    p {
+      font-size: 2rem;
     }
+  }
 }

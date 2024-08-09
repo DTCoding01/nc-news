@@ -32,13 +32,23 @@ export default function AccountDetails() {
   }
 
   return (
-    <section className="account-details">
+    <section
+      className="account-details"
+      aria-labelledby="account-details-heading"
+    >
       <div className="account-details-header">
-        <p className="my-posts">My Posts</p>
-        <button onClick={handleClick}>Sign-Out</button>
+        <h1 id="account-details-heading" className="visually-hidden">
+          Account Details
+        </h1>
+        <p className="my-posts" aria-label="My Posts">
+          My Posts
+        </p>
+        <button onClick={handleClick} aria-label="Sign out of account">
+          Sign-Out
+        </button>
       </div>
       {isLoading ? (
-        <div className="loading">
+        <div className="loading-container" role="status" aria-live="polite">
           <LoadingAnimation />
         </div>
       ) : (

@@ -17,6 +17,7 @@ import {
 export default function TopicsPage() {
   const { user } = useContext(UserContext);
   const [topics, setTopics] = useState([]);
+  const [filteredTopics, setFilteredTopics] = useState([]);
   const [followedTopics, setFollowedTopics] = useState(new Set());
   const { setError } = useError();
   const { isLoading, setIsLoading } = useIsLoading();
@@ -34,7 +35,10 @@ export default function TopicsPage() {
     setIsLoading(true);
 
     fetchAndSortTopics()
-      .then(setTopics)
+      .then((sortedTopics) => {
+        setTopics(sortedTopics);
+        setFilteredTopics(sortedTopics);
+      })
       .then(() => fetchFollowedTopics(user.username))
       .then(setFollowedTopics)
       .catch((error) => {
@@ -79,10 +83,30 @@ export default function TopicsPage() {
       });
   }
 
+  function handleChange(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    if (searchTerm === "") {
+      setFilteredTopics(topics);
+    } else {
+      setFilteredTopics(
+        topics.filter((topic) => topic.slug.toLowerCase().includes(searchTerm))
+      );
+    }
+  }
+
   return (
     <section className="topics-page">
-      {isLoading && <LoadingAnimation />}
+      {isLoading && (
+        <div className="loading-container" role="status" aria-live="polite">
+          <LoadingAnimation />
+        </div>
+      )}
+
       <ul>
+        <input
+          placeholder="Search for a topic..."
+          onChange={handleChange}
+        ></input>
         {addTopicClicked ? (
           <AddTopicForm
             setAddTopicClicked={setAddTopicClicked}
@@ -94,7 +118,7 @@ export default function TopicsPage() {
             +
           </li>
         )}
-        {topics.map((topic) => (
+        {filteredTopics.map((topic) => (
           <li className="topic-option" key={topic.slug}>
             <Link to={`/topics/${topic.slug}`}>
               <TopicsCard topic={topic} />

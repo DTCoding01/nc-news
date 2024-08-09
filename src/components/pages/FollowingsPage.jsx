@@ -9,19 +9,33 @@ import {
   sortArticlesByDate,
 } from "../../utils/followings.js";
 import { useIsLoading } from "../../contexts/IsLoading.jsx";
-import loadingAnimation from "../LoadingAnimation.jsx";
 import LoadingAnimation from "../LoadingAnimation.jsx";
+
 export default function FollowingsPage() {
-  const { user } = useContext(UserContext);
+  const { user, isUserLoading } = useContext(UserContext);
   const [articles, setArticles] = useState([]);
   const { setError } = useError();
   const { isLoading, setIsLoading } = useIsLoading();
 
   useEffect(() => {
-    if (!user) return;
+    if (isUserLoading) {
+      return;
+    }
+
+    if (!user) {
+      return;
+    }
+
     setIsLoading(true);
+
     fetchFollowings(user.username)
       .then(({ topics, users }) => {
+        if (topics.length === 0 && users.length === 0) {
+          console.warn("No followings found for user:", user.username);
+          setIsLoading(false);
+          return;
+        }
+
         const topicCriteria = topics.map((topicName) => ({ topicName }));
         const userCriteria = users.map((author) => ({ author }));
 
@@ -33,19 +47,34 @@ export default function FollowingsPage() {
       .then(([topicArticles, userArticles]) => {
         const allArticles = [...topicArticles, ...userArticles];
         const sortedArticles = sortArticlesByDate(allArticles);
+
         setArticles(sortedArticles);
-        setIsLoading(false);
       })
-      .catch((err) => {
-        console.error("Error in followings fetch chain:", err);
-        setError("Followings not found");
+      .catch((err) => {})
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, [user, setError]);
+  }, [user, isUserLoading, setError, setIsLoading]);
 
   return (
-    <div className="following-articles">
-      <p className="your-followed">Your Followed Topics</p>
-      {isLoading ? <LoadingAnimation /> : <ArticlesList articles={articles} />}
+    <div
+      className="following-articles"
+      aria-labelledby="following-articles-heading"
+    >
+      <div className="following-header">
+        {articles.length === 0 && !isLoading ? (
+          <p className="no-follows">You follow no one</p>
+        ) : (
+          <h2 id="following-articles-heading">Your Followings</h2>
+        )}
+      </div>
+      {isLoading ? (
+        <div className="loading-container" role="status" aria-live="polite">
+          <LoadingAnimation />
+        </div>
+      ) : (
+        <ArticlesList articles={articles} />
+      )}
     </div>
   );
 }

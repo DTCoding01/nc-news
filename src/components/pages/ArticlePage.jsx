@@ -1,7 +1,11 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../css/pages/ArticlePage.scss";
-import { useEffect, useState } from "react";
-import { getArticleById, patchArticleVotes } from "../../../api.js";
+import { useContext, useEffect, useState } from "react";
+import {
+  fetchFollowings,
+  getArticleById,
+  patchArticleVotes,
+} from "../../../api.js";
 import ArticleCard from "../articles/ArticleCard.jsx";
 import { splitContentIntoParagraphs } from "../../utils/articles.js";
 import CommentList from "../comments/CommentList.jsx";
@@ -13,6 +17,8 @@ import {
 import { useError } from "../../contexts/ErrorContext.jsx";
 import { useIsLoading } from "../../contexts/IsLoading.jsx";
 import LoadingAnimation from "../LoadingAnimation.jsx";
+import { handleFollowUser, handleUnfollowUser } from "../../utils/users.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 export default function ArticlePage({ placeholderArticle }) {
   const { articleId } = useParams();
@@ -20,38 +26,56 @@ export default function ArticlePage({ placeholderArticle }) {
   const [paragraphs, setParagraphs] = useState([]);
   const [articleVotes, setArticleVotes] = useState(0);
   const [userVote, setUserVote] = useState(0);
+  const [authorFollowed, setAuthorFollowed] = useState(false);
   const { setError } = useError();
+  const { user } = useContext(UserContext);
   const { isLoading, setIsLoading } = useIsLoading();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (placeholderArticle) {
-      setIsLoading(true);
-      setArticle(placeholderArticle);
-      const splitBody = splitContentIntoParagraphs(placeholderArticle.body);
-      setParagraphs(splitBody);
-      setIsLoading(false);
-      return;
-    }
-    if (articleId) {
-      setIsLoading(true);
-      getArticleById(articleId)
-        .then((fetchedArticle) => {
+    async function fetchArticleData() {
+      if (placeholderArticle) {
+        setArticle(placeholderArticle);
+        setParagraphs(splitContentIntoParagraphs(placeholderArticle.body));
+        setIsLoading(false);
+      } else if (articleId) {
+        try {
+          setIsLoading(true);
+          const fetchedArticle = await getArticleById(articleId);
           setArticle(fetchedArticle);
           setArticleVotes(fetchedArticle.votes);
-          const splitBody = splitContentIntoParagraphs(fetchedArticle.body);
-          setParagraphs(splitBody);
+          setParagraphs(splitContentIntoParagraphs(fetchedArticle.body));
 
           const storedVote = getUserVoteFromStorage(articleId);
           setUserVote(storedVote);
-          setIsLoading(false);
-        })
-        .catch((error) => {
+        } catch (error) {
           setError("Article Not Found");
           navigate("/error");
-        });
+        } finally {
+          setIsLoading(false);
+        }
+      }
     }
-  }, [articleId, placeholderArticle]);
+    fetchArticleData();
+  }, [articleId, placeholderArticle, navigate, setError, setIsLoading]);
+
+  useEffect(() => {
+    async function checkAuthorFollowed() {
+      if (user && article.author) {
+        try {
+          const { users } = await fetchFollowings(user.username);
+          if (users.includes(article.author)) {
+            setAuthorFollowed(true);
+          } else {
+            setAuthorFollowed(false);
+          }
+        } catch (error) {
+          console.error("Failed to fetch followings", error);
+        }
+      }
+    }
+    checkAuthorFollowed();
+  }, [user, article.author]);
 
   function handleVote(e) {
     const voteType = e.target.id === "upvote-article" ? 1 : -1;
@@ -85,21 +109,56 @@ export default function ArticlePage({ placeholderArticle }) {
     });
   }
 
+  function followUser(e, author) {
+    e.preventDefault();
+    console.log(author);
+    handleFollowUser(user.username, { followeeUsername: author })
+      .then(() => {
+        setAuthorFollowed(true);
+      })
+      .catch((error) => {
+        setError(`Could not follow ${author}`);
+      });
+  }
+
+  function unfollowUser(e, author) {
+    e.preventDefault();
+    handleUnfollowUser(user.username, author)
+      .then(() => {
+        setAuthorFollowed(false);
+      })
+      .catch((error) => {
+        setError(`Could not unfollow ${author}`);
+      });
+  }
+
   return (
     <section className="article-page">
       {isLoading ? (
-        <LoadingAnimation />
+        <div className="loading-container" role="status" aria-live="polite">
+          <LoadingAnimation />
+        </div>
       ) : (
-        <div className="article-section">
+        <article className="article-section">
           <ArticleCard article={article} />
           <div className="author-and-votes">
-            <p className="author">{article.author}</p>
-            <div className="article-buttons">
-              <p className={`article-votes`}>{articleVotes}</p>
+            <p className="author" aria-label={`Author: ${article.author}`}>
+              {article.author}
+            </p>
+
+            <div
+              className="article-buttons"
+              role="group"
+              aria-label="Article voting and follow options"
+            >
+              <p className="article-votes" aria-live="polite">
+                {articleVotes}
+              </p>
               <button
                 id="upvote-article"
                 className={userVote === 1 ? "clicked" : null}
                 onClick={handleVote}
+                aria-pressed={userVote === 1}
                 aria-label="Upvote article"
               >
                 +
@@ -108,10 +167,33 @@ export default function ArticlePage({ placeholderArticle }) {
                 id="downvote-article"
                 className={userVote === -1 ? "clicked" : null}
                 onClick={handleVote}
+                aria-pressed={userVote === -1}
                 aria-label="Downvote article"
               >
                 -
               </button>
+              {user.username !== article.author &&
+                (authorFollowed ? (
+                  <button
+                    onClick={(e) => {
+                      unfollowUser(e, article.author);
+                    }}
+                    className="unfollow"
+                    aria-label={`Unfollow ${article.author}`}
+                  >
+                    Unfollow
+                  </button>
+                ) : (
+                  <button
+                    className="follow"
+                    onClick={(e) => {
+                      followUser(e, article.author);
+                    }}
+                    aria-label={`Follow ${article.author}`}
+                  >
+                    Follow
+                  </button>
+                ))}
             </div>
           </div>
 
@@ -126,7 +208,7 @@ export default function ArticlePage({ placeholderArticle }) {
               return null;
             }
           })}
-        </div>
+        </article>
       )}
       {!placeholderArticle && <CommentList articleId={article.article_id} />}
     </section>
