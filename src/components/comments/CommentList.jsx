@@ -56,6 +56,7 @@ export default function CommentList({ articleId }) {
         body: commentBody,
         comment_id: tempCommentId,
         created_at: new Date().toISOString(),
+        votes: 0,
       };
 
       setComments((prevComments) =>
@@ -104,7 +105,10 @@ export default function CommentList({ articleId }) {
           <ul>
             {comments.map((comment) => (
               <li className="article-list-item" key={comment.comment_id}>
-                <CommentCard comment={comment} setComments={setComments} />
+                <CommentCard
+                  comment={comment}
+                  setComments={setComments} 
+                />
               </li>
             ))}
           </ul>

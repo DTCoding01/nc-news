@@ -9,7 +9,7 @@ export default function Header() {
     <header className="header">
       <div className="header-content">
         <h1 className="logo">
-          <Link to={"/"}>NCNews</Link>
+          <Link to={"/articles"}>NCNews</Link>
         </h1>
         {user && <img src={user.avatar_url}></img>}
       </div>

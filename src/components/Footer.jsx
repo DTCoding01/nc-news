@@ -6,6 +6,7 @@ import {
   faBookOpen,
   faCirclePlus,
   faUserLarge,
+  faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Footer() {
@@ -18,8 +19,13 @@ export default function Footer() {
           </Link>
         </li>
         <li>
-          <Link to={"/topics"}>
+          <Link to={"/articles"}>
             <FontAwesomeIcon icon={faBookOpen} size="xl" />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/topics"}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
           </Link>
         </li>
         <li>
