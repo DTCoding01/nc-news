@@ -8,11 +8,6 @@ footer {
   display: flex;
   justify-content: center;
 
-  // div {
-  //   width: 10vw;
-  //   background-color: black;
-  // }
-
   ul {
     width: 90%;
     height: 100%;
@@ -30,6 +25,11 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
+    &:hover a svg {
+      color: black; 
+    }
   }
 
   a {
@@ -40,9 +40,10 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%;
-  }
 
-  a:hover {
-    color: black;
+    svg {
+      width: 100%;
+      transition: color 0.3s;
+    }
   }
 }
