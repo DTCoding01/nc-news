@@ -8,8 +8,13 @@ footer {
   display: flex;
   justify-content: center;
 
+  // div {
+  //   width: 10vw;
+  //   background-color: black;
+  // }
+
   ul {
-    width: 100%;
+    width: 90%;
     height: 100%;
     max-width: 900px;
     display: flex;
@@ -20,8 +25,7 @@ footer {
 
   li {
     text-align: center;
-    width: 18%;
-    min-width: 90px;
+    min-width: 70px;
     max-width: 200px;
     display: flex;
     justify-content: center;
@@ -36,7 +40,6 @@ footer {
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 100%;
   }
 
   a:hover {
